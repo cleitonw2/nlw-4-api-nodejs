@@ -1,19 +1,15 @@
-import express from 'express';
+import "reflect-metadata";
+import express from "express";
+import "./database";
+import { router } from "./routes";
 
 const app = express();
 
-app.get('/users:id', (req, res) => {
-    const { id } = req.params;
-    res.json({ msg: `esse é um id de mumero ${id}` })
-});
+app.use(express.json());
 
-app.post('/', (req, res) => {
+app.use(router);
 
-
-    res.json({ msg: 'ola seja bem vindo a nlw' })
-});
-
-const port = 3000
+const port = 3000;
 app.listen(port, () => {
     console.log(`server running on the port ${port}`)
 })
