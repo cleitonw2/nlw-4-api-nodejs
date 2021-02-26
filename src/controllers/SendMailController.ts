@@ -6,6 +6,7 @@ import { SurveysUsersRepository } from '../repositories/SurveysUsersRepository';
 import { UsersRepository } from '../repositories/UserRepository';
 import SendMailService from '../services/SendMailService';
 import dotenv from 'dotenv';
+import { AppError } from '../errors/AppError';
 
 dotenv.config();
 
@@ -21,12 +22,12 @@ class SendMailController {
         const user = await usersRepository.findOne({ email })
 
         if (!user)
-            return res.status(400).json({ error: 'User does not exists' });
+            throw new AppError("User does not exists!");
 
         const survey = await surveysRepository.findOne({ id: survey_id });
 
         if (!survey)
-            return res.status(400).json({ error: 'Survey does not exists' });
+            throw new AppError("Survey does not exists!");
 
         const npsPath = resolve(__dirname, "..", "views", "emails", "npsMail.hbs");
 
